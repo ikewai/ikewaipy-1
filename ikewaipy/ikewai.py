@@ -12,13 +12,22 @@ from requests.auth import HTTPBasicAuth
 class Ikewai:
 
     def __init__(self, endpoint='https://ikeauth.its.hawaii.edu', token_url='https://ikewai.its.hawaii.edu:8888/login', token='', username='guest'):
+      """
+      Accepts an endpoint  url string to set Tapis endpoint by default this is set to Ike Wai, token_url is a url string to an authentication
+       endpoint set by default to the Ike Wai login url, token is a Tapis authentication API token if you have one, username is an Ike Wai username
+       by default the guest user is set.
+      """
       self.endpoint = endpoint
       self.token_url = token_url
       self.token = token
       self.username = username
 
     def login(self):
+        """
+
+        """
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+        print('Enter password for '+ self.username+ ": ")
         res = requests.post(self.token_url+'?', auth=HTTPBasicAuth(self.username, getpass.getpass()), verify=False)
         resp=json.loads(res.content)
         if 'error' in resp:
