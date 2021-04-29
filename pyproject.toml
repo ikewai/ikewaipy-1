@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "ikewaipy"
-version = "0.1.0"
+version = "0.1.01"
 description = ""
 authors = ["Sean Cleveland <sean.b.cleveland@gmail.com>"]
+readme ="README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"
