@@ -22,13 +22,18 @@ class Ikewai:
       self.token = token
       self.username = username
 
-    def login(self):
+    def login(self, password=''):
         """
-
+        Accepts and option password parameter -if not provided this will prompt for interactive password entry.
         """
+        passw = '';
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        print('Enter password for '+ self.username+ ": ")
-        res = requests.post(self.token_url+'?', auth=HTTPBasicAuth(self.username, getpass.getpass()), verify=False)
+        if(password == ''):
+            passw = getpass.getpass();
+        else:
+            print('Enter password for '+ self.username+ ": ")
+            passw = password;
+        res = requests.post(self.token_url+'?', auth=HTTPBasicAuth(self.username, passw), verify=False)
         resp=json.loads(res.content)
         if 'error' in resp:
             print('Login Error- please check your username and password combination and try again')
@@ -57,6 +62,30 @@ class Ikewai:
             return resp['result']
         else:
             return resp
+
+    def listWells(self, limit=10, offset=0):
+        query = "{'name':'Well'}"
+        return self.searchMetadata(query, limit, offset)
+
+    def listWaterQualitySites(self, limit=10, offset=0):
+        query = "{'name':'Water_Quality_Site'}"
+        return self.searchMetadata(query, limit, offset)
+
+    def listSites(self, limit=10, offset=0):
+        query = "{'name':'Site'}"
+        return self.searchMetadata(query, limit, offset)
+
+    def listVariables(self, limit=10, offset=0):
+        query = "{'name':'Variable'}"
+        return self.searchMetadata(query, limit, offset)
+
+    def listPeople(self, limit=10, offset=0):
+        query = "{'name':'Person'}"
+        return self.searchMetadata(query, limit, offset)
+
+    def listFiles(self, limit=10, offset=0):
+        query = "{'name':'File', 'value.published':'True'}"
+        return self.searchMetadata(query, limit, offset)
 
     # Given a water quality site id download the csv file of data from waterqualitydata.us
     def downloadWaterQualityData(id):

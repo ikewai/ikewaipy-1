@@ -17,10 +17,25 @@ def client():
               token=token,
               username=username
               )
-    ike.login();
+    ike.login(password=password);
     return ike
 
 
 
 def testSearchMetadata(client):
     print(client.searchMetadata("{'name':'Variable','value.variable_name':'Temperature'}", 1))
+
+def testListWells(client):
+    print(client.listWells(1, 0))
+
+def testListWaterQualitySites(client):
+    print(client.listWaterQualitySites(1, 0))
+
+def testListSites(client):
+    print(client.listSites(1, 0))
+
+def testListPeople(client):
+    print(client.listPeople(1, 0))
+
+def testListFiles(client):
+    print(client.listFiles(1, 0))
