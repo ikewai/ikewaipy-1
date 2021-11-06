@@ -29,9 +29,9 @@ class Ikewai:
         passw = '';
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         if(password == ''):
+            print('Enter password for '+ self.username+ ": ")
             passw = getpass.getpass();
         else:
-            print('Enter password for '+ self.username+ ": ")
             passw = password;
         res = requests.post(self.token_url+'?', auth=HTTPBasicAuth(self.username, passw), verify=False)
         resp=json.loads(res.content)
@@ -84,7 +84,7 @@ class Ikewai:
         return self.searchMetadata(query, limit, offset)
 
     def listFiles(self, limit=10, offset=0):
-        query = "{'name':'File', 'value.published':'True'}"
+        query = "{'name':'File', 'value.published':'True', 'value.filename':'/.*ikewai-annotated-data.*/'}"
         return self.searchMetadata(query, limit, offset)
 
     # Given a water quality site id download the csv file of data from waterqualitydata.us
